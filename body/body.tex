@@ -1,5 +1,4 @@
 % !Mode:: "TeX:UTF-8" 
-
 \BiChapter{实验要求}{}
 
 % -------------------------------章节分割线-------------------------------
@@ -14,10 +13,124 @@
 
 % -------------------------------章节分割线-------------------------------
 \BiChapter{代码review记录}{}
+\begin{tabular}{|c|c|c|c|}
+\hline
+ 问题描述 & 类型 & 所在代码行号 &  修改方式\\
+\hline
+\makecell[l] {在点击退出按钮后 \\ GUI界面关闭 \\ 但程序仍在运行} & 
+\makecell[l] {程序退出控制}  & 
+\makecell[l] {MainPage.java \\ : 467} &
+\makecell[l] {增加代码 \\ setDefaultCloseOperation \\ (WindowConstants. \\ EXIT\_ON\_CLOSE) }\\ 
+
+\hline
+
+\end{tabular}
+
+
 
 % -------------------------------章节分割线-------------------------------
 \BiChapter{Checkstyle所发现的代码问题清单及原因分析}{}
+(使用 Sun Checks 规则)
+~\\
 
+\begin{adjustwidth}{-1pt}{}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+编号 & 问题描述 & 类型 & 所在代码行号 & 修改策略 \\
+\hline
+1 &
+\makecell[l] {类缺少JavaDoc} &
+\makecell[l] {文档缺失} &
+\makecell[l] {Edge.java \\ :3} &
+\makecell[l] {补充Edge类文档} \\
+
+\hline
+2 &
+\makecell[l] {大括号应位于 \\ 类、方法定义同一行} &
+\makecell[l] {类、方法 \\ 定义格式} &
+\makecell[l] {Edge.java \\ :4} &
+\makecell[l] {将大括号放在 \\ 类、方法定义同一行} \\
+
+\hline
+3 &
+\makecell[l] {','前缺少空格} &
+\makecell[l] {空格格式} &
+\makecell[l] {Edge.java \\ :5} &
+\makecell[l] {补充空格} \\
+
+\hline
+4 &
+\makecell[l] {应避免在 \\ 字表达式中赋值} &
+\makecell[l] {赋值格式} &
+\makecell[l] {Edge.java \\ :10} &
+\makecell[l] {将赋值拆分成多行} \\
+
+\hline
+5 &
+\makecell[l] {参数xxx应 \\ 定义为final的} &
+\makecell[l] {只读参数、变量 \\ 用法} &
+\makecell[l] {Edge.java \\ :12} &
+\makecell[l] {为变量声明 \\ 增加final关键字} \\
+
+\hline
+6 &
+\makecell[l] {'\{'后应换行} &
+\makecell[l] {避免在一行中 \\ 定义方法} &
+\makecell[l] {Edge.java \\ :33} &
+\makecell[l] {为方法定义 \\ 规范换行} \\
+
+\hline
+7 &
+\makecell[l] {if/else结构 \\ 必须使用大括号} &
+\makecell[l] {控制结构 \\ 可读性} &
+\makecell[l] {Edge.java \\ :36} &
+\makecell[l] {为if结构 \\ 添加大括号} \\
+
+\hline
+8 &
+\makecell[l] {数组大括号 \\ 位置错误} &
+\makecell[l] {数组定义规范} &
+\makecell[l] {Graph.java \\ :121} &
+\makecell[l] {数组中括号 \\ 移至变量类型后} \\
+
+\hline
+9 &
+\makecell[l] {xxx是一个 \\ 魔术数字} &
+\makecell[l] {直接常数} &
+\makecell[l] {Graph.java \\ :135} &
+\makecell[l] {为数字添加常量名} \\
+
+\hline
+10 &
+\makecell[l] {不应以.*形式导入xxx} &
+\makecell[l] {import规范} &
+\makecell[l] {MainPage.java \\ :1} &
+\makecell[l] {导入具体类名} \\
+
+\hline
+11 &
+\makecell[l] {xxx应为private \\ 并配置访问方法} &
+\makecell[l] {访问权限规范} &
+\makecell[l] {MainPage.java \\ :13} &
+\makecell[l] {访问权限改为private \\ 添加访问方法} \\
+
+\hline
+12 &
+\makecell[l] {名称必须匹配 \\ 表达式xxx} &
+\makecell[l] {命名规范} &
+\makecell[l] {MainPage.java \\ :22} &
+\makecell[l] {refactor修改命名} \\
+
+\hline
+13 &
+\makecell[l] {本行字符数xxx \\ 最多xxx} &
+\makecell[l] {行长度规范} &
+\makecell[l] {MainPage.java \\ :80} &
+\makecell[l] {拆成多行} \\
+\hline
+
+\end{tabular}
+\end{adjustwidth}
 % -------------------------------章节分割线-------------------------------
 \BiChapter{PMD所发现的代码问题清单及原因分析}{}
 
