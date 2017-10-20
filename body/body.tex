@@ -1,4 +1,5 @@
 % !Mode:: "TeX:UTF-8" 
+\renewcommand{\textfraction}{0.05} 
 \BiChapter{实验要求}{}
 
 % -------------------------------章节分割线-------------------------------
@@ -10,6 +11,29 @@
 
 % -------------------------------章节分割线-------------------------------
 \BiChapter{本次实验所评审的代码}{}
+
+
+\noindent 姓名：张冠华~\\
+学号：1150310323~\\
+Github地址：https://github.com/miuws~\\
+
+\noindent 姓名：王珊~\\
+学号：1150310302~\\
+Github地址：https://github.com/arthua196
+\begin{figure}[h]
+\begin{center}
+  \includegraphics[width=\linewidth]{project.jpg}
+  项目清单
+\end{center}
+\end{figure}
+
+\begin{figure}[h]
+\begin{center}
+  \includegraphics[width=\linewidth]{src.jpg}
+  源码清单
+\end{center}
+\end{figure}
+
 
 % -------------------------------章节分割线-------------------------------
 \BiChapter{代码review记录}{}
@@ -75,7 +99,7 @@
 \hline
 6 &
 \makecell[l] {'\{'后应换行} &
-\makecell[l] {避免在一行中 \\ 定义方法} &
+\makecell[l] {避免使用一行 \\ 定义方法} &
 \makecell[l] {Edge.java \\ :33} &
 \makecell[l] {为方法定义 \\ 规范换行} \\
 
@@ -98,7 +122,7 @@
 \makecell[l] {xxx是一个 \\ 魔术数字} &
 \makecell[l] {直接常数} &
 \makecell[l] {Graph.java \\ :135} &
-\makecell[l] {为数字添加常量名} \\
+\makecell[l] {将数字赋值给常量} \\
 
 \hline
 10 &
@@ -131,11 +155,285 @@
 
 \end{tabular}
 \end{adjustwidth}
-% -------------------------------章节分割线-------------------------------
-\BiChapter{PMD所发现的代码问题清单及原因分析}{}
+~\\
+(使用 Google 规则集的不同之处)
+~\\
+\begin{adjustwidth}{-1pt}{}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+编号 & 问题描述 & 类型 & 所在代码行号 & 修改策略 \\
+\hline
+1 &
+\makecell[l] {缩进空格应为两个} &
+\makecell[l] {缩进格式} &
+\makecell[l] {TextMaker.java \\ :13} &
+\makecell[l] {(和规则集有关，不修改)} \\
+
+\hline
+2 &
+\makecell[l] {包名导入顺序错误} &
+\makecell[l] {import顺序错误} &
+\makecell[l] {MainPage.java \\ :3} &
+\makecell[l] {更改包导入顺序} \\
+
+\hline
+3 &
+\makecell[l] {注释中的空行 \\  应该在<p>标签后} &
+\makecell[l] {缩进格式} &
+\makecell[l] {Graph.java \\ :35} &
+\makecell[l] {(和规则集有关，不修改)} \\
+
+\hline
+4 &
+\makecell[l] {其它if,for等 \\ 缩进空格数} &
+\makecell[l] {缩进格式} &
+\makecell[l] {Graph.java \\ :35} &
+\makecell[l] {(和规则集有关，不修改)} \\
+\hline
+\end{tabular}
+\end{adjustwidth}
+
+~\\~\\
+\noindent 小结：~\\
+Sun和Google规则集大致相同。它们主要对这些问题进行检查：~\\
+1、缩进~\\
+2、有利于可读性的空格~\\
+3、代码块是否正确地被大括号包围~\\
+
+\noindent 不同的之处有：~\\
+1、Google对缩进的要求是Sun规则集的一般~\\
+2、Google规则集对JavaDoc的格式检查更严格~\\
+3、Google规则集检查包名的导入顺序~\\
+4、Sun规则集会检查部分内部逻辑
+
 
 % -------------------------------章节分割线-------------------------------
-\BiChapter{FindBugs所发现的代码问题清单及原因分析}{}
+\BiChapter{PMD所发现的代码问题清单及原因分析}{}
+优先级按照 https://pmd.github.io/pmd-5.8.1/pmd-java/rules/java 文档定义
+~\\
+\begin{adjustwidth}{-2em}{}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+优先级 & 问题描述 & 违反的规则集合 & 代码行号 & 修改策略 \\
+\hline
+3 & 
+\makecell[l] {变量、参数名过短 \\ 不易于理解} & 
+\makecell[l] {naming} &
+\makecell[l] {Edge.java \\ : 5} &
+\makecell[l] {使用refactor \\ 更改命名} \\
+
+\hline
+3 & 
+\makecell[l] {缺少包定义} & 
+\makecell[l] {naming} &
+\makecell[l] {Edge.java \\ : 3} &
+\makecell[l] {为类编写文档} \\
+
+\hline
+4 & 
+\makecell[l] {布尔型返回值 \\ 方法命名错误} & 
+\makecell[l] {naming} &
+\makecell[l] {Edge.java \\ : 33} &
+\makecell[l] {用is、has、can等 \\ 命名此类方法} \\
+
+\hline
+3 & 
+\makecell[l] {没有'\{'的if语句} & 
+\makecell[l] {braces} &
+\makecell[l] {Edge.java \\ : 46} &
+\makecell[l] {为if结构增加'\{'} \\
+
+\hline
+3 & 
+\makecell[l] {类中方法过多} & 
+\makecell[l] {codesize} &
+\makecell[l] {TextMaker.java \\ : 10} &
+\makecell[l] {方法过多的类 \\ 应该重构} \\
+
+\hline
+3 & 
+\makecell[l] {控制流程语句 \\ 过于复杂} & 
+\makecell[l] {codesize} &
+\makecell[l] {MainPage.java \\ : 69} &
+\makecell[l] {重构以较少控制分支} \\
+
+\hline
+2 & 
+\makecell[l] {缺少注释} & 
+\makecell[l] {comments} &
+\makecell[l] {Edge.java \\ : 3} &
+\makecell[l] {添加注释} \\
+
+\hline
+3 & 
+\makecell[l] {多个return的方法} & 
+\makecell[l] {controversial} &
+\makecell[l] {Edge.java \\ : 46} &
+\makecell[l] {将返回值复制给变量 \\ 使用一个return返回} \\
+
+\hline
+3 & 
+\makecell[l] {硬编码字面量} & 
+\makecell[l] {controversial} &
+\makecell[l] {Edge.java \\ : 46} &
+\makecell[l] {赋予有意义的常量名} \\
+
+\hline
+3 & 
+\makecell[l] {发现final局部变量} & 
+\makecell[l] {controversial} &
+\makecell[l] {Graph.java \\ : 51} &
+\makecell[l] {将final局部变量 \\ 写成类的域} \\
+
+\hline
+3 & 
+\makecell[l] {在操作数中赋值} & 
+\makecell[l] {controversial} &
+\makecell[l] {Graphviz.java \\ : 317} &
+\makecell[l] {拆成多行，单独赋值} \\
+
+\hline
+3 & 
+\makecell[l] {应显式指定访问权限} & 
+\makecell[l] {controversial} &
+\makecell[l] {MianPage.java \\ : 13} &
+\makecell[l] {显示指定访问权限} \\
+
+\hline
+3 & 
+\makecell[l] {使用具体实现的类 \\ 限制了功能的实现} & 
+\makecell[l] {coupling} &
+\makecell[l] {Graph.java \\ : 13} &
+\makecell[l] {使用接口名 \\ 定义对象引用} \\
+\hline
+\end{tabular}
+\end{adjustwidth}
+
+~\\
+
+\begin{adjustwidth}{-2em}{}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+优先级 & 问题描述 & 违反的规则集合 & 代码行号 & 修改策略 \\
+\hline
+3 & 
+\makecell[l] {只在初始化时复制的 \\ 变量应声明为final} & 
+\makecell[l] {design} &
+\makecell[l] {Edge.java \\ : 4} &
+\makecell[l] {在域中初始化 \\ 并声明为final} \\
+
+\hline
+3 & 
+\makecell[l] {使用了size=0 \\ 判断集合是否为空} & 
+\makecell[l] {design} &
+\makecell[l] {Graph.java \\ : 155} &
+\makecell[l] {使用isEmpty方法替代} \\
+
+\hline
+3 & 
+\makecell[l] {发现God Class \\ (过于复杂的类)} & 
+\makecell[l] {design} &
+\makecell[l] {Graph.java \\ : 1} &
+\makecell[l] {重构类} \\
+
+\hline
+3 & 
+\makecell[l] {使用了'=' \\ 比较对象} & 
+\makecell[l] {design} &
+\makecell[l] {MainPage.java \\ : 74} &
+\makecell[l] {替换为equals方法} \\
+
+\hline
+2 & 
+\makecell[l] {发现空的catch代码块} & 
+\makecell[l] {empty} &
+\makecell[l] {TextMaker \\ : 136} &
+\makecell[l] {抛出RuntimeException \\ 或处理异常} \\
+
+\hline
+3 & 
+\makecell[l] {发现调用System.Exit} & 
+\makecell[l] {j2ee} &
+\makecell[l] {MainPage.java \\ : 216} &
+\makecell[l] {抛出异常} \\
+
+\hline
+3 & 
+\makecell[l] {发现可以声明 \\ 为final的参数} & 
+\makecell[l] {optimizations} &
+\makecell[l] {Edge.java \\ : 14} &
+\makecell[l] {未在方法中修改的参数 \\ 声明为final} \\
+
+\hline
+3 & 
+\makecell[l] {发现重复的字面量} & 
+\makecell[l] {string} &
+\makecell[l] {Graph.java \\ : 249} &
+\makecell[l] {将字面量值赋予常量} \\
+
+\hline
+3 & 
+\makecell[l] {发现未使用的参数} & 
+\makecell[l] {unusedcode} &
+\makecell[l] {Graph.java \\ : 85} &
+\makecell[l] {删除参数} \\
+\hline
+\end{tabular}
+\end{adjustwidth}
+
+~\\
+\noindent 小结：~\\
+PMD的各个规则集都要它们自己的要检查的规则~\\
+如naming规则集检查命名问题，design规则集检查代码的结构逻辑~\\
+要根据规则集关于其规则的描述，决定是否应该使用规则集
+
+
+% -------------------------------章节分割线-------------------------------
+\BiChapter{FindBugs所发现的代码问清单及原因分析}{}
+
+\begin{adjustwidth}{-1pt}{}
+\begin{tabular}{|c|c|c|c|}
+\hline
+问题描述 & 类型 & 所在代码行号 & 修改策略 \\
+\hline
+\makecell[l] {不是所有的代码路径 \\ 都关闭了流} &
+\makecell[l] {IO资源释放} &
+\makecell[l] {Graphviz.java \\ : 315} &
+\makecell[l] {try with resource \\ 管理资源} \\
+
+\hline
+\makecell[l] {try catch 语句 \\ catch未处理} &
+\makecell[l] {异常处理} &
+\makecell[l] {Graphviz.java \\ : 48} &
+\makecell[l] {直接抛出异常或 \\ 在方法内处理异常} \\
+
+\hline
+\makecell[l] {使用$\backslash$ n作为换行符} &
+\makecell[l] {格式化符号 \\ 符合平台特性} &
+\makecell[l] {Graph.java \\ : 249} &
+\makecell[l] {将$\backslash$ n替换为\%n} \\
+
+\hline
+\makecell[l] {发现调用 \\ System.exit} &
+\makecell[l] {System.exit \\ 用法错误} &
+\makecell[l] {Graph.java \\ : 216} &
+\makecell[l] {抛出 \\ RuntimeException} \\
+
+\hline
+\makecell[l] {BufferedWriter  \\ 未指定编码} &
+\makecell[l] {对默认编码依赖} &
+\makecell[l] {Graphviz.java \\ : 254} &
+\makecell[l] {针对平台 \\ 指定编码参数} \\
+
+\hline
+\makecell[l] {使用硬编码 \\ 引用绝对路径} &
+\makecell[l] {使用硬编码} &
+\makecell[l] {TextMaker.java \\ : 268} &
+\makecell[l] {使用相对路径 \\ 并赋值给常量} \\
+\hline
+
+\end{tabular}
+\end{adjustwidth}
 
 % -------------------------------章节分割线-------------------------------
 \BiChapter{VisualVM性能分析结果}{}
