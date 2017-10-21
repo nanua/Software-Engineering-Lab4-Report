@@ -809,7 +809,7 @@ PMD的各个规则集都要它们自己的要检查的规则~\\
 \label{fig:mm-2-4}
 \end{figure}
 
-由图\ref{fig:mm-2-1}，图\ref{fig:mm-2-2}，图\ref{fig:mm-2-3}，每次记录数据时主要占用堆空间的类同样为char[]以及java.lang.String。同样的，从图\ref{fig:mm-2-1}到图\ref{fig:mm-2-3}的变化中可以看出，每次记录数据时占用堆空间较多的类的实例数以及大小并没有发生较大的改变。由查询二十次桥接词与查询一次桥接词时堆的比较可见看出，char[]的实例数增加了1\%，java.lang.String的实例数增加了1\%，HashMap\$Node的实例数增加了0.3\%，基本可视作没有发生变化，与无内存泄漏时的预期基本一致，因此可以推断出在查询桥接词时为发生内存泄漏。
+由图\ref{fig:mm-2-1}，图\ref{fig:mm-2-2}，图\ref{fig:mm-2-3}，每次记录数据时主要占用堆空间的类同样为char[]以及java.lang.String。同样的，从图\ref{fig:mm-2-1}到图\ref{fig:mm-2-3}的变化中可以看出，每次记录数据时占用堆空间较多的类的实例数以及大小并没有发生较大的改变。由查询二十次桥接词与查询一次桥接词时堆的比较可见看出，char[]的实例数增加了1\%，java.lang.String的实例数增加了1\%，HashMap\$Node的实例数增加了0.3\%，基本可视作没有发生变化，与无内存泄漏时的预期基本一致，因此可以推断出在查询桥接词时未发生内存泄漏。
 
 \BiSubsection{根据桥接词生成新文本}{}
 在根据桥接词生成新文本的功能中，我们主要测试多次根据桥接词生成新文本时是否会出现内存泄漏的情况。
@@ -846,15 +846,169 @@ PMD的各个规则集都要它们自己的要检查的规则~\\
 \label{fig:mm-3-4}
 \end{figure}
 
-由图\ref{fig:mm-2-1}，图\ref{fig:mm-2-2}，图\ref{fig:mm-2-3}，每次记录数据时主要占用堆空间的类同样为char[]以及java.lang.String。同样的，从图\ref{fig:mm-2-1}到图\ref{fig:mm-2-3}的变化中可以看出，每次记录数据时占用堆空间较多的类的实例数以及大小并没有发生较大的改变。由查询二十次桥接词与查询一次桥接词时堆的比较可见看出，char[]的实例数增加了1\%，java.lang.String的实例数增加了1\%，HashMap\$Node的实例数增加了0.3\%，基本可视作没有发生变化，与无内存泄漏时的预期基本一致，因此可以推断出在查询桥接词时为发生内存泄漏。
+由图\ref{fig:mm-3-1}，图\ref{fig:mm-3-2}，图\ref{fig:mm-3-3}，每次记录数据时主要占用堆空间的类同样为char[]以及java.lang.String。同样的，从图\ref{fig:mm-3-1}到图\ref{fig:mm-3-3}的变化中可以看出，每次记录数据时占用堆空间较多的类的实例数以及大小并没有发生较大的改变。由执行二十次由桥接词生成新文本与执行一次由桥接词生成新文本时堆的比较可见看出，char[]的实例数增加了0.7\%，java.lang.String的实例数增加了0.7\%，HashMap\$Node的实例数增加了0\%，因此各个类的实例数基本可视作没有发生变化，与无内存泄漏时的预期基本一致，因此可以推断出在由桥接词生成新文本时未发生内存泄漏。
 
 \BiSubsection{计算两个单词之间的最短路径}{}
+在计算两个单词之间的最短路径的功能中，我们主要测试多次计算同一节点的单源最短路径时是否会出现内存泄漏的情况。
+测试方法为读入Lab1测试数据中“读取并生成有向图”部分的文件数据，然后在此有向图上进行一次，十次，二十次对同一单词来计算单源最短路径，由此分析是否在计算最短路径的过程中发生了内存泄漏。其中，每次记录堆的数据占用情况前都进行垃圾回收。
+由于程序每次完成最短路径的计算之后通过弹出对话框的方式显示计算得到的最短路径，关闭对话框后查询结果即消失，因此若无内存泄漏，则可预计所有类的堆占用情况皆不会发生较大的改变。
+
+第一，二，三次记录的数据分别见图\ref{fig:mm-4-1}，图\ref{fig:mm-4-2}，图\ref{fig:mm-4-3}。执行二十次计算单源最短路径与执行一次计算单源最短路径时记录的数据的差异比较见图\ref{fig:mm-4-4}。
+
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{/../figures/mm-4-1}
+\caption{执行一次时堆情况}
+\label{fig:mm-4-1}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{/../figures/mm-4-2}
+\caption{执行十次时堆情况}
+\label{fig:mm-4-2}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{/../figures/mm-4-3}
+\caption{执行二十次时堆情况}
+\label{fig:mm-4-3}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{/../figures/mm-4-4}
+\caption{执行一次与执行二十次堆比较}
+\label{fig:mm-4-4}
+\end{figure}
+
+由图\ref{fig:mm-4-1}，图\ref{fig:mm-4-2}，图\ref{fig:mm-4-3}可知，与之前类似的，每次记录数据时主要占用堆空间的类同样为char[]以及java.lang.String。同样的，从图\ref{fig:mm-4-1}到图\ref{fig:mm-4-3}的变化中可以看出，每次记录数据时占用堆空间较多的类的实例数以及大小并没有发生较大的改变。由执行二十次单源最短路径的计算与执行一次单源最短路径的计算时堆的比较可见看出，char[]的实例数增加了0.7\%，java.lang.String的实例数增加了0.7\%，java.lang.Objtec[]的实例数增加了0.2\%，HashMap\$Node的实例数增加了0.3\%，因此各个类的实例数基本可视作没有发生变化，与无内存泄漏时的预期基本一致，因此可以推断出在计算最短路径时未发生内存泄漏
+
 \BiSubsection{随机游走}{}
+在测试随机游走时，我们采用同样的方法测试在随机游走的过程中是否出现了内存泄漏。
+测试的方法为读入Lab1测试数据中“读取并生成有向图”部分的文件数据，然后在此有向图上进行一次，十次，二十次随机游走并记录堆的信息，每一次随机游走皆进行到没有节点可以继续游走为止，由此分析是否在计算最短路径的过程中发生了内存泄漏。其中，每次记录堆的数据占用情况前都进行垃圾回收。
+由于每一次随机游走之间没有相互关联，GUI中也不保留随机游走的数据，因此在没有发生内存泄漏的前提下，可预计所有类的堆占用情况皆不会发生较大的改变。
+
+第一，二，三次记录的数据分别见图\ref{fig:mm-5-1}，图\ref{fig:mm-5-2}，图\ref{fig:mm-5-3}。执行二十次随机游走与执行一次随机游走时记录的数据的差异比较见图\ref{fig:mm-5-4}。
+
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{/../figures/mm-5-1}
+\caption{执行一次时堆情况}
+\label{fig:mm-5-1}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{/../figures/mm-5-2}
+\caption{执行十次时堆情况}
+\label{fig:mm-5-2}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{/../figures/mm-5-3}
+\caption{执行二十次时堆情况}
+\label{fig:mm-5-3}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{/../figures/mm-5-4}
+\caption{执行一次与执行二十次堆比较}
+\label{fig:mm-5-4}
+\end{figure}
+
+由图\ref{fig:mm-5-1}，图\ref{fig:mm-5-2}，图\ref{fig:mm-5-3}可知，与之前类似的，每次记录数据时主要占用堆空间的类同样为char[]以及java.lang.String。同样的，从图\ref{fig:mm-5-1}到图\ref{fig:mm-5-3}的变化中可以看出，每次记录数据时占用堆空间较多的类的实例数以及大小并没有发生较大的改变。由执行二十次随机游走与执行一次随机游走时堆的比较可见看出，char[]的实例数增加了3\%，java.lang.String的实例数增加了3\%，HashMap\$Node的实例数增加了0.06\%，因此各个类的实例数基本可视作没有发生变化，与无内存泄漏时的预期基本一致，因此可以推断出在随机游走时未发生内存泄漏。
+
+最后，值得一提的是，在上述五种功能的分析中，所有的功能的堆信息中占用堆最多的都是char[]以及java.lang.string两个类，并且两个类的实例个数非常相近。这是因此在java.lang.String类中，即有char[]作为其实例变量来存储java.lang.String表示的字符串中的字符，因此任何一个java.lang.String的对象都会有一个char[]变量，故其实例数量相近。
 
 \BiSection{代码改进之后的执行时间统计结果}{}
-由在使用VisualVM进行耗时分析的结果可知，在不改变GUI框架以及使用GraphViz进行绘图的前提下无法从耗时方面对程序的性能进行优化。因此无法根据VisualVM测试所得到的耗时结果对其进行完善，故本节略过。
+在本节中将给出代码改进之后的执行时间统计结果。
+由使用VisualVM进行耗时分析以及内存分析的结果可知，在不改变GUI框架以及使用GraphViz进行绘图的前提下无法从耗时方面对程序的性能进行优化，也因为没有出现内存泄漏而无法通过消除内存泄漏来改进代码。因此本节中采用的修改后的代码为进行代码review，checkstyle，FindBugs，PMD进行检测与修正后的代码，并不包含利用VisualVM进行代码改进的部分。
+
+对改进代码进行时间测试的方法为：依次执行“生成并展示有向图”，“查询桥接词”，“由桥接词生成新文本”，“计算最短路径”，“随机游走”五个功能，其中“生成并展示有向图”输入数据为Lab1的验收文件，“查询桥接词为”为查询从the到of的桥接词，“由桥接词生成新文本”中的文本为“In the big time, servitization one of the important trends-of the IT world.”，“计算最短路径”为计算单词in的单源最短路径，“随机游走”为游走到没有可选节点为止。测试时分别对每个功能执行时各个函数的耗时利用VisualVM进行记录。
+
+“生成并展示有向图”耗时图像为图\ref{fig:new-time-1}，“查询桥接词”耗时图像为图\ref{fig:new-time-2}，“由桥接词生成新文本”耗时图像为图\ref{fig:new-time-3}，“计算最短路径”耗时图像为图\ref{fig:new-time-4}，“随机游走”耗时图像为图\ref{fig:new-time-5}。
+
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{/../figures/new-time-1}
+\caption{生成并展示有向图耗时}
+\label{fig:new-time-1}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{/../figures/new-time-2}
+\caption{查询桥接词耗时}
+\label{fig:new-time-2}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{/../figures/new-time-3}
+\caption{由桥接词生成新文本耗时}
+\label{fig:new-time-3}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{/../figures/new-time-4}
+\caption{计算最短路径耗时}
+\label{fig:new-time-4}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{/../figures/new-time-5}
+\caption{随机游走耗时}
+\label{fig:new-time-5}
+\end{figure}
 
 \BiSection{代码改进之后的内存占用统计结果}{}
+在本节中将给出代码改进之后的内存占用统计结果。
+与上一节相同，本节中采用的修改后的代码为进行代码review，checkstyle，FindBugs，PMD进行检测与修正后的代码，并不包含利用VisualVM进行代码改进的部分。
+
+对改进代码进行内存测试的方法为：依次执行“生成并展示有向图”，“查询桥接词”，“由桥接词生成新文本”，“计算最短路径”，“随机游走”五个功能，其中“生成并展示有向图”输入数据为Lab1的验收文件，“查询桥接词为”为查询从the到of的桥接词，“由桥接词生成新文本”中的文本为“In the big time, servitization one of the important trends-of the IT world.”，“计算最短路径”为计算单词in的单源最短路径，“随机游走”为游走到没有可选节点为止。测试时分别对每个功能执行时的堆使用情况利用VisualVM进行记录。
+
+“生成并展示有向图”的堆使用情况图像为图\ref{fig:new-mm-1}，“查询桥接词”的堆使用情况图像为图\ref{fig:new-mm-2}，“由桥接词生成新文本”的堆使用图像为图\ref{fig:new-mm-3}，“计算最短路径”的堆使用图像为图\ref{fig:new-mm-4}，“随机游走”的堆使用图像为图\ref{fig:new-mm-5}。
+
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{/../figures/new-mm-1}
+\caption{生成并展示有向图的堆使用}
+\label{fig:new-mm-1}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{/../figures/new-mm-2}
+\caption{查询桥接词的堆使用}
+\label{fig:new-mm-2}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{/../figures/new-mm-3}
+\caption{由桥接词生成新文本的堆使用}
+\label{fig:new-mm-3}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{/../figures/new-mm-4}
+\caption{计算最短路径的堆使用}
+\label{fig:new-mm-4}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{/../figures/new-mm-5}
+\caption{随机游走的堆使用}
+\label{fig:new-mm-5}
+\end{figure}
 
 % -------------------------------章节分割线-------------------------------
 \BiChapter{利用Git/GitHub进行协作的过程}{}
@@ -908,6 +1062,8 @@ Push至远程仓库后，在Github上将最新的提交Pull Request到原作者�
 
 由此，即完成了利用Git与GitHub进行协作的第一部分。
 
+\BiSection{第二部分}{}
+
 % -------------------------------章节分割线-------------------------------
 \BiChapter{评述}{}
 \BiSection{对代码规范方面的评述}{}
@@ -916,17 +1072,7 @@ Push至远程仓库后，在Github上将最新的提交Pull Request到原作者�
 % -------------------------------章节分割线-------------------------------
 \BiChapter{计划与实际进度}{}
 在本节中将描述本次实验中各个环节的任务名称，计划时间长度，实际耗费时间，以及提前或延期的原因分析。
-\begin{table}
-\caption{计划与进度}\label{tab:plan}
-\begin{tabularx}{\linewidth}{|X|c|c|X|}
-\hline
-任务名称 & 计划时间长度（分钟） & 实际耗费时间（分钟） & 提前或延期的原因分析\\
-\hline
-\endhead
-在IntelliJ下配置工具 & 30 & 60 & 工具配置不熟悉\\
-\hline
-\end{tabularx}
-\end{table}
+\LTXtable{\textwidth}{body/plan.tex}
 
 % -------------------------------章节分割线-------------------------------
 \BiChapter{小结}{}
