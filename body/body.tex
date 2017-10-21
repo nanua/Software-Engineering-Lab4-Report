@@ -103,7 +103,7 @@ Github地址：https://github.com/arthua196
 
 % -------------------------------章节分割线-------------------------------
 \BiChapter{代码review记录}{}
-\noindent
+\begin{adjustwidth}{-1pt}{}
 \begin{tabular}{|c|c|c|c|}
 \hline
  问题描述 & 类型 & 所在代码行号 &  修改方式\\
@@ -114,9 +114,33 @@ Github地址：https://github.com/arthua196
 \makecell[l] {增加代码 \\ setDefaultCloseOperation \\ (WindowConstants. \\ EXIT\_ON\_CLOSE) }\\ 
 
 \hline
+\makecell[l] {没有对Graphviz \\ 关键字特别处理 \\ 展示图失败} & 
+\makecell[l] {外部方法调用}  & 
+\makecell[l] {TextMaker.java \\ : 168} &
+\makecell[l] {使用引号 \\ 包围所有关键词 }\\ 
+
+\hline
+\makecell[l] {对文本逐字符处理 \\ 效率极低} & 
+\makecell[l] {运行效率}  & 
+\makecell[l] {TextMaker.java \\ : 53} &
+\makecell[l] {使用一行正则表达式 \\ 完成文本处理} \\ 
+
+\hline
+\makecell[l] {重新打开对话框 \\ 以前输入的文字混乱} & 
+\makecell[l] {GUI界面管理}  & 
+\makecell[l] {MainPage.java \\ : 322} &
+\makecell[l] {每次打开对话框 \\ 初始化新的对话框} \\ 
+
+
+\hline
+\makecell[l] {使用 \\ HIDE\_ON\_CLOSE \\ 关闭对话框} & 
+\makecell[l] {GUI资源释放}  & 
+\makecell[l] {MainPage.java \\ : 365} &
+\makecell[l] {改为 \\ DISPOSE\_ON\_CLOSE} \\ 
+\hline
 
 \end{tabular}
-
+\end{adjustwidth}
 
 
 % -------------------------------章节分割线-------------------------------
@@ -197,7 +221,7 @@ Github地址：https://github.com/arthua196
 \makecell[l] {不应以.*形式导入xxx} &
 \makecell[l] {import规范} &
 \makecell[l] {MainPage.java \\ :1} &
-\makecell[l] {导入具体类名} \\
+\makecell[l] {GUI使用了大部分 \\ 包中的类，不修改} \\
 
 \hline
 11 &
@@ -248,7 +272,7 @@ Github地址：https://github.com/arthua196
 3 &
 \makecell[l] {注释中的空行 \\  应该在<p>标签后} &
 \makecell[l] {缩进格式} &
-\makecell[l] {Graph.java \\ :35} &
+\makecell[l] {Graphviz.java \\ :23} &
 \makecell[l] {(和规则集有关，不修改)} \\
 
 \hline
@@ -386,7 +410,7 @@ Sun和Google规则集大致相同。它们主要对这些问题进行检查：~\
 优先级 & 问题描述 & 违反的规则集合 & 代码行号 & 修改策略 \\
 \hline
 3 & 
-\makecell[l] {只在初始化时复制的 \\ 变量应声明为final} & 
+\makecell[l] {只在初始化时赋值的 \\ 变量应声明为final} & 
 \makecell[l] {design} &
 \makecell[l] {Edge.java \\ : 4} &
 \makecell[l] {在域中初始化 \\ 并声明为final} \\
@@ -424,7 +448,7 @@ Sun和Google规则集大致相同。它们主要对这些问题进行检查：~\
 \makecell[l] {发现调用System.Exit} & 
 \makecell[l] {j2ee} &
 \makecell[l] {MainPage.java \\ : 216} &
-\makecell[l] {抛出异常} \\
+\makecell[l] {检查逻辑 \\ System.Exit \\ 使用无误} \\
 
 \hline
 3 & 
@@ -486,7 +510,7 @@ PMD的各个规则集都要它们自己的要检查的规则~\\
 \makecell[l] {发现调用 \\ System.exit} &
 \makecell[l] {System.exit \\ 用法错误} &
 \makecell[l] {Graph.java \\ : 216} &
-\makecell[l] {抛出 \\ RuntimeException} \\
+\makecell[l] {检查逻辑 \\ System.Exit \\ 使用无误} \\
 
 \hline
 \makecell[l] {BufferedWriter  \\ 未指定编码} &
