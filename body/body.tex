@@ -293,7 +293,7 @@ Sun和Google规则集大致相同。它们主要对这些问题进行检查：~\
 3、代码块是否正确地被大括号包围~\\
 
 \noindent 不同的之处有：~\\
-1、Google对缩进的要求是Sun规则集的一般~\\
+1、Google对缩进的要求是Sun规则集的一半~\\
 2、Google规则集对JavaDoc的格式检查更严格~\\
 3、Google规则集检查包名的导入顺序~\\
 4、Sun规则集会检查部分内部逻辑
@@ -959,11 +959,118 @@ Push至远程仓库后，在Github上将最新的提交Pull Request到原作者�
 由此，即完成了利用Git与GitHub进行协作的第一部分。
 
 \BiSection{第二部分}{}
+首先，需要原作者在自己的Lab1仓库建立新分支Lab4，建立好后见图\ref{fig:gh-2-1}，然后将评审组pull request过来的代码合并进去，合并好后见图\ref{fig:gh-2-2}，最后需要将Lab4的分支通过“git fetch”命令fetch到本地Lab1仓库中，fetch完成后见图\ref{fig:gh-2-3}。
+
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{/../figures/gh-2-1}
+\caption{在远程仓库建立Lab4分支}
+\label{fig:gh-2-1}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{/../figures/gh-2-2}
+\caption{接收评审组的pull request并进行合并}
+\label{fig:gh-2-2}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{/../figures/gh-2-3}
+\caption{将远程Lab4分支fetch到本地}
+\label{fig:gh-2-3}
+\end{figure}
+
+然后，需要在本地使用git命令“git diff Lab4 master”列出所有的修改，所有修改见图\ref{fig:gh-2-5-1}，图\ref{fig:gh-2-5-2}，图\ref{fig:gh-2-5-3}，图\ref{fig:gh-2-5-4}，图\ref{fig:gh-2-5-5}，图\ref{fig:gh-2-5-6}，图\ref{fig:gh-2-5-7}。之后，需要对每一项修改进行理解以及确认。
+
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{/../figures/gh-2-5-1}
+\caption{查看所有修改(1)}
+\label{fig:gh-2-5-1}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{/../figures/gh-2-5-2}
+\caption{查看所有修改(2)}
+\label{fig:gh-2-5-2}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{/../figures/gh-2-5-3}
+\caption{查看所有修改(3)}
+\label{fig:gh-2-5-3}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{/../figures/gh-2-5-4}
+\caption{查看所有修改(4)}
+\label{fig:gh-2-5-4}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{/../figures/gh-2-5-5}
+\caption{查看所有修改(5)}
+\label{fig:gh-2-5-5}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{/../figures/gh-2-5-6}
+\caption{查看所有修改(6)}
+\label{fig:gh-2-5-6}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{/../figures/gh-2-5-7}
+\caption{查看所有修改(7)}
+\label{fig:gh-2-5-7}
+\end{figure}
+
+将评审组的改进进行进一步的修改之后，在Lab4分支上进行提交，提交完成后见图\ref{fig:gh-2-6}。
+
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{/../figures/gh-2-6}
+\caption{对评审组的改进进行修改并提交}
+\label{fig:gh-2-6}
+\end{figure}
+
+最后，需要将Lab4分支与master分支使用git命令“git merge Lab4”进行merge操作，merge完成后见图\ref{fig:gh-2-7}。并在这之后使用“git push”命令将本地的master分支推送到GitHub上远程的Lab1仓库，完成之后见图\ref{fig:gh-2-8}。
+
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{/../figures/gh-2-7}
+\caption{将Lab4分支merge到master分支}
+\label{fig:gh-2-7}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{/../figures/gh-2-8}
+\caption{将master分支推送至GitHub仓库}
+\label{fig:gh-2-8}
+\end{figure}
+
+由此，即完成了利用Git进行写作的完成过程。
 
 % -------------------------------章节分割线-------------------------------
 \BiChapter{评述}{}
+在本章中，将分别从代码的规范性以及代码的性能两个角度来对代码进行总体的评述。
+
 \BiSection{对代码规范方面的评述}{}
+在代码规范性方面，从Checkstyle的检测结果可以看出，该项目在代码缩进，代码中增加可读性的空格，JavaDoc，大括号的位置，变量名的命名，控制流程的复杂度，Java的语言习惯，限制变量为final，限制方法为final，使用常数变量代替数字，包的导入方式，每行最大字符数等当面皆存在较大的问题，代码风格与Java的标准风格（在测试中采用了Sun以及Google的代码规范）要求差别较大。通过观察可以看出，其代码的规范类似于C语言，并不是Java语言常用的规范，因此可以推断出项目作者对C语言编程较为熟练，但是缺少Java语言的编程训练，将不少C语言中的习惯代入到Java语言的编码过程之中，降低了代码的可读性。特别需要强调的是，除去仅仅影响阅读的缩进，空格等问题之外，该项目中还存在不少的可能影响软件整体的代码缺陷，如在项目中使用数字而不是常值变量，常值变量未声明为final，仅仅在类内部使用的方法未声明为private等。虽然说这些缺陷并不影响代码目前的功能，但是并不利用项目日后的迭代，同时也降低了代码的可维护性，即提高了代码的维护成本。
+
 \BiSection{对代码性能方面的评述}{}
+以下将从代码的时间性能，内存性能，以及健壮性三个方面对代码的性能进行评述。
+
+在代码的时间性能方面，从VisualVM的测试结果可以看出，其时间性能主要受到GraphViz绘图程序以及GUI配置函数的限制，其主要的业务逻辑在耗时测试中的占用时间几乎都可以忽略不计，因此若要大幅度的改进项目的时间性能，因考虑采用其他方式进行图片的绘制以及优化GUI的实现方法。在内存性能方面，经过VisualVM的测试，可以推断出在大多数情况下改项目都不会发生内存泄漏的问题，并且占用内存的主要对象也并不是程序中自行创建的对象。并且通过评测数据可以判断其对内存的占用较小，有较好的内存性能。在代码的健壮性方面，有review的结果可知，代码中仍然存在着不够健壮的部分，如点击按钮关闭窗口程序后主线程仍然在运行，在从菜单栏打开功能弹窗后若在弹窗中输入信息再重新打开弹窗则会出现UI元素绘制异常，没有考虑单词中含GraphViz关键字时的处理等问题，因此其健壮性只能满足较低的健壮性要求，并不能很好的处理稍微异常的情况。
 
 % -------------------------------章节分割线-------------------------------
 \BiChapter{计划与实际进度}{}
@@ -972,7 +1079,15 @@ Push至远程仓库后，在Github上将最新的提交Pull Request到原作者�
 
 % -------------------------------章节分割线-------------------------------
 \BiChapter{小结}{}
+FindBugs，PMD，CheckStyles三者都是代码规范的静态检查程序，但是在具体的检查要求上它们三者并不相同。就检查的文件而言，PMD和CheckStyles检查的是程序的源文件，而FindBugs检查的则是.class的Java字节码程序。并且，这三者在检查的目的上也并不相同。FindBugs主要检查Java字节码程序中潜在的Bug，如没有合理的关闭资源，使用了错误的相等判断，没有检查空指针等问题。而CheckStyles则是注重检查源代码中的代码规范，如JavaDoc注释，变量的命名规范，import规范，缩进，大括号的位置，有利于阅读的空格等。PMD则是检查代码中的代码规范以及违法最佳实践的情景，如空的catch语句块，过于复杂的控制逻辑，没有发生改变但是没有声明为final的变量等。因此三者虽然都是代码的静态检查程序，但是其检查的文件以及检查的目的皆不一样。在效果方面，由于本次评审的项目代码规范方面有较大的缺陷，因此通过CheckStyles发现了大量的此类问题，并且这其中有部分问题也被PMD所发现。PMD则发现了较多的代码规范以及可能引起问题的代码。而FindBugs则主要发现了资源未释放以及部分编码函数没有指定编码的问题。因此，可以说这三个工具在本次代码评审中皆在不同方面发挥了较大的作用，不过由于本次代码的问题主要集中在代码规范上，因此CheckStyles发挥的作用较大。
 
+在配置以及使用的简易性方面，得益于IntelliJ插件的内部集成，我们都可以在IntelliJ中十分方便的安装以及使用FindBugs，PMD，CheckStyles这三个工具。并且由于所有的工具都有内置的规则集，因此在没有特殊需求时都可以非常简便的直接使用默认的规则集合对待评审的代码进行审查。在代码规范的可扩展性与自定义性方面，PMD，CheckStyles都可以非常简易的导入自行编写的规则集，但是FindBugs则需要从FindBugs的源码入手进行修改，添加自定义的规则，然后将编译好的jar文件替代原来的FindBugs程序。因此从可扩展性的角度讲，PMD与CheckStyles要优于FindBugs。
+
+在本次实验中，主要使用VisualVM进行代码的时间性能评测以及空间性能评测。VisualVM都以图表的方式直观的显示出了测试时间段内程序中各个函数的运行耗时以及各个类的实例所占用的堆空间。特别值得一提的时，VisualVM的计时是针对函数执行的时间进行记录的，并不是程序的执行时间，因此能够给我们更加细致的程序时间性能的分析，而且VisualVM能够支持随时通过按钮进行垃圾回收，由此避免了在不同时间点测试堆的占用图像时由于未回收的垃圾对分析造成的影响。在结果方面，VisualVM发现了本次评审的代码中耗费时间的主要是GUI元素的配置以及调用GraphViz进行绘图的操作，给如何提升程序的时间性能提供了足够的信息。并且，在空间性能方面，也通过VisualVM的分析报告推断出项目中基本不存在内存泄漏问题，因此不需要对内存泄漏进行进一步的改进，减少了代码优化时需要考虑的问题。
+
+对于代码是否符合规范与代码执行的时空复杂性方面，我们认为两者之间并不存在必然的直接联系。因为代码规范是编写代码的一种最佳实践，即符合此规范的代码更有可能具备较好的性能（也即包括了时空复杂性），但是并不是说代码符合规范就一定有较好的时空复杂性，或代码有较好的时空复杂性就一定很好的符合了规范，后者的典型反例即为各类编程竞赛中选手的代码。并且，代码规范能够使得软件更有可能有较好的性能，其中的性能并不只是时空复杂性，还包括了健壮性，可维护性，可读性等工程方面的问题。不过，具备较好时空复杂性的代码一般都较好地符合了代码规范，因为否则可能造成内存泄漏等问题，从而严重影响代码的时空性能。综上所述，我们认为虽然这两者之间没有必然的直接联系，但是两者之间仍然相互依赖。
+
+在软件代码优化方面，通过这次的实验，我们认识到代码的评审与优化既不能离开人工审核，也不能放弃使用代码自动评审工具。自动评审工具能够执行大量繁琐机器规则检查，避免人工进行这些规则检查时由于疏忽而忽略的问题，而人工评审则能够编写多种多样的测试用例去测试各种极端情况以及各种组合情况，由此共同配合去发现代码中已经出现的错误及极有可能出现错误的位置，进而优化代码的性能。
 
 %%% Local Variables:
 %%% mode: latex
